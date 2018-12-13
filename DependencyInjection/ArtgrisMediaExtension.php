@@ -27,5 +27,8 @@ class ArtgrisMediaExtension extends Extension
 
         $resources = $container->getParameter('twig.form.resources');
         $container->setParameter('twig.form.resources', array_merge(['@ArtgrisMedia/form/field_media.html.twig'], $resources));
+
+        $artgrisFileManagerConfig = $container->getParameter('artgris_file_manager');
+        $container->setParameter('artgris_filemedia.config', $artgrisFileManagerConfig);
     }
 }
