@@ -12,9 +12,9 @@ class FileManagerConfigurationService extends \Twig_Extension
      */
     private $artgrisFileManagerConfig;
 
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct($artgrisFileManagerConfig)
     {
-        $this->artgrisFileManagerConfig = $parameterBag->get('artgris_file_manager');
+        $this->artgrisFileManagerConfig = $artgrisFileManagerConfig;
     }
 
     public function getWebPath(string $conf)
