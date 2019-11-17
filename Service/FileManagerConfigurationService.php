@@ -2,6 +2,7 @@
 
 namespace Artgris\Bundle\MediaBundle\Service;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class FileManagerConfigurationService extends \Twig_Extension
@@ -12,13 +13,25 @@ class FileManagerConfigurationService extends \Twig_Extension
      */
     private $artgrisFileManagerConfig;
 
-    public function __construct($artgrisFileManagerConfig)
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    public function __construct($artgrisFileManagerConfig, ContainerInterface $container)
     {
+        $this->container = $container;
         $this->artgrisFileManagerConfig = $artgrisFileManagerConfig;
     }
 
     public function getWebPath(string $conf)
     {
+        if (isset($this->artgrisFileManagerConfig['conf'][$conf]['service'])) {
+            $extra = [];
+            $conf = $this->container->get($this->artgrisFileManagerConfig['conf'][$conf]['service'])->getConf($extra);
+            return $conf['dir'];
+        }
+
         if (!isset($this->artgrisFileManagerConfig['conf'][$conf])) {
             throw new \InvalidArgumentException("The conf \"$conf\" was not found in artgris_file_manager.");
         }
