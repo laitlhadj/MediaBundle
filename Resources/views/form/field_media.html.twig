@@ -64,7 +64,7 @@
                 {% endif %}
 
                 {% set base_path = get_web_path(conf) %}
-                <div class="img-preview col-sm-2" id="preview-{{ form.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}" data-base-path="{{ base_path }}">
+                <div class="img-preview col-sm-2" id="preview-{{ form.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}" data-base-path="{{ base_path|replace({'../web':''}) }}">
                     {% set preview = fileIcon(form.vars.data).html %}
                     {% if form.vars.allow_crop and '<img' in preview and '.svg' not in preview and form.vars.data[:base_path|length] == base_path %}
                         <a href="#" class="js-crop crop-hover" data-toggle="modal" data-target="#crop-modal-{{ id }}">

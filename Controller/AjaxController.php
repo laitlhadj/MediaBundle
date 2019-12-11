@@ -41,6 +41,11 @@ class AjaxController extends Controller
 
         $destinationFolder = null;
         if ($conf !== null) {
+
+            if (isset($fileManager['conf'][$conf]['service'])) {
+                $fileManager['conf'][$conf] += $this->get($fileManager['conf'][$conf]['service'])->getConf();
+            }
+
             if (isset($fileManager['conf'][$conf]['dir'])) {
                 $destinationFolder = $fileManager['conf'][$conf]['dir'];
             } else {
